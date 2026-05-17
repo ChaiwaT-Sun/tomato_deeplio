@@ -1,0 +1,14 @@
+{
+  "name": "flutter-smart-links-functions",
+  "version": "1.0.0",
+  "description": "Firebase Cloud Functions for flutter_smart_links",
+  "main": "index.js",
+  "engines": {
+    "node": "20"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.1.0",
+    "firebase-functions": "^5.0.1"
+  },
+  "private": true
+}

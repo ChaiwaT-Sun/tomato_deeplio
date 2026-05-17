@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Opening app…</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px 32px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    .logo { font-size: 48px; margin-bottom: 16px; }
+    h1 { font-size: 22px; font-weight: 700; color: #111; margin-bottom: 8px; }
+    p  { font-size: 15px; color: #666; line-height: 1.5; margin-bottom: 24px; }
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      color: #fff;
+      background: #e53935;
+      margin: 6px;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.88; }
+    .btn.secondary {
+      background: #fff;
+      color: #e53935;
+      border: 2px solid #e53935;
+    }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid #eee;
+      border-top-color: #e53935;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #store-buttons { display: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">🍅</div>
+    <div class="spinner" id="spinner"></div>
+    <h1 id="title">Opening the app…</h1>
+    <p id="subtitle">If the app doesn't open automatically, use the buttons below.</p>
+
+    <div id="store-buttons">
+      <a id="ios-btn"     class="btn"           href="#" style="display:none">Download on App Store</a>
+      <a id="android-btn" class="btn"           href="#" style="display:none">Get it on Google Play</a>
+      <a id="fallback-btn" class="btn secondary" href="#" style="display:none">Open in Browser</a>
+    </div>
+  </div>
+
+  <script>
+    // ─────────────────────────────────────────────────────────────────────────
+    // Configuration — these values are injected server-side or via query params
+    // ─────────────────────────────────────────────────────────────────────────
+    var CONFIG = {
+      uriScheme:      "myapp",
+      iosStoreUrl:    "https://apps.apple.com/app/id123456789",
+      androidStoreUrl:"https://play.google.com/store/apps/details?id=com.example.myapp",
+      fallbackUrl:    "https://example.com",
+      // How long to wait before showing store buttons (ms)
+      timeout:        2500
+    };
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Helpers
+    // ─────────────────────────────────────────────────────────────────────────
+    function getParam(name) {
+      return new URLSearchParams(window.location.search).get(name);
+    }
+
+    function isIOS() {
+      return /iphone|ipad|ipod/i.test(navigator.userAgent);
+    }
+
+    function isAndroid() {
+      return /android/i.test(navigator.userAgent);
+    }
+
+    function generateToken() {
+      return 'sl_' + Math.random().toString(36).slice(2) + Date.now().toString(36);
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Deferred deep link — store the current URL + install token in localStorage
+    // so the app can recover it on first open via a server lookup or clipboard.
+    // ─────────────────────────────────────────────────────────────────────────
+    function storeDeferredLink() {
+      try {
+        var token = generateToken();
+        var payload = {
+          url:       window.location.href,
+          token:     token,
+          timestamp: new Date().toISOString(),
+          referrer:  document.referrer || null
+        };
+        localStorage.setItem('_sl_deferred', JSON.stringify(payload));
+        // Optionally POST to your backend here:
+        // fetch('/api/deferred', { method: 'POST', body: JSON.stringify(payload) });
+        return token;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Build the deep link URL from the current page path + params
+    // ─────────────────────────────────────────────────────────────────────────
+    function buildDeepLink() {
+      var path   = window.location.pathname;   // e.g. /product/123
+      var search = window.location.search;     // e.g. ?ref=USER001
+      // Custom scheme: myapp://product/123?ref=USER001
+      return CONFIG.uriScheme + ':/' + path + search;
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Show store / fallback buttons
+    // ─────────────────────────────────────────────────────────────────────────
+    function showFallback() {
+      document.getElementById('spinner').style.display = 'none';
+      document.getElementById('title').textContent = 'Get the app';
+      document.getElementById('subtitle').textContent =
+        'Install the app to open this link, or continue in your browser.';
+      document.getElementById('store-buttons').style.display = 'block';
+
+      var iosBtn     = document.getElementById('ios-btn');
+      var androidBtn = document.getElementById('android-btn');
+      var fallbackBtn= document.getElementById('fallback-btn');
+
+      if (isIOS() && CONFIG.iosStoreUrl) {
+        iosBtn.href = CONFIG.iosStoreUrl;
+        iosBtn.style.display = 'inline-block';
+      } else if (isAndroid() && CONFIG.androidStoreUrl) {
+        androidBtn.href = CONFIG.androidStoreUrl;
+        androidBtn.style.display = 'inline-block';
+      }
+
+      var fallback = getParam('_sl_fallback') || CONFIG.fallbackUrl;
+      if (fallback) {
+        fallbackBtn.href = fallback;
+        fallbackBtn.style.display = 'inline-block';
+      }
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Main redirect logic
+    // ─────────────────────────────────────────────────────────────────────────
+    (function main() {
+      // 1. Store deferred link data before attempting to open the app
+      storeDeferredLink();
+
+      // 2. Attempt to open the app via custom URI scheme
+      var deepLink = buildDeepLink();
+      var appOpened = false;
+
+      // Listen for page visibility change — if the app opened, the page
+      // will be hidden (user switched to app).
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) appOpened = true;
+      });
+
+      // On iOS, use a hidden iframe trick to avoid "Cannot Open Page" alert
+      if (isIOS()) {
+        var iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = deepLink;
+        document.body.appendChild(iframe);
+        setTimeout(function() { document.body.removeChild(iframe); }, 500);
+      } else {
+        window.location.href = deepLink;
+      }
+
+      // 3. After timeout, if the app didn't open, show store buttons
+      setTimeout(function() {
+        if (!appOpened) showFallback();
+      }, CONFIG.timeout);
+    })();
+  </script>
+</body>
+</html>

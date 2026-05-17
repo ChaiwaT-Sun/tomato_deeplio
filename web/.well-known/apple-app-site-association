@@ -1,0 +1,34 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "TEAMID.com.example.myapp"
+        ],
+        "components": [
+          {
+            "/": "/product/*",
+            "comment": "Matches any URL whose path starts with /product/"
+          },
+          {
+            "/": "/category/*",
+            "comment": "Matches any URL whose path starts with /category/"
+          },
+          {
+            "/": "/user/*",
+            "comment": "Matches any URL whose path starts with /user/"
+          },
+          {
+            "/": "/*",
+            "comment": "Matches all other paths — adjust to restrict scope"
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "TEAMID.com.example.myapp"
+    ]
+  }
+}
