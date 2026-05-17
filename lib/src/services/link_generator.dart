@@ -1,8 +1,8 @@
-import 'package:flutter_smart_links/src/smart_links_config.dart';
+import 'package:tomato_deeplio/src/smart_links_config.dart';
 
 /// Generates smart link URLs from path + parameter inputs.
 class LinkGenerator {
-  final SmartLinksConfig config;
+  final TomatoDeeplioConfig config;
 
   const LinkGenerator(this.config);
 

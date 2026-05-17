@@ -1,5 +1,5 @@
-import 'package:flutter_smart_links/src/models/route_match.dart';
-import 'package:flutter_smart_links/src/models/smart_link.dart';
+import 'package:tomato_deeplio/src/models/route_match.dart';
+import 'package:tomato_deeplio/src/models/smart_link.dart';
 
 /// The result of processing an incoming [SmartLink].
 class SmartLinkResult {

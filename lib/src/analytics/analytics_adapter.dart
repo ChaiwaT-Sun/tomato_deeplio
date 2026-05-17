@@ -1,4 +1,4 @@
-import 'package:flutter_smart_links/src/models/analytics_event.dart';
+import 'package:tomato_deeplio/src/models/analytics_event.dart';
 
 /// Interface for plugging in custom analytics backends.
 ///

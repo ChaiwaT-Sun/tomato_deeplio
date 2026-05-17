@@ -1,21 +1,23 @@
 import Flutter
 import UIKit
 
-/// FlutterSmartLinksPlugin (iOS / Swift)
-///
-/// Handles:
-/// - Universal Links (HTTPS — requires apple-app-site-association)
-/// - Custom URI scheme deep links
-/// - Initial link extraction (cold start)
-/// - Foreground link stream (EventChannel)
-/// - Deferred link token persistence (UserDefaults)
-public class FlutterSmartLinksPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
+/**
+ TomatoDeeplioPlugin (iOS / Swift)
+
+ Handles:
+ - Universal Links (HTTPS — requires apple-app-site-association)
+ - Custom URI scheme deep links
+ - Initial link extraction (cold start)
+ - Foreground link stream (EventChannel)
+ - Deferred link token persistence (UserDefaults)
+ */
+public class TomatoDeeplioPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
 
     // MARK: - Constants
 
-    private static let methodChannelName = "flutter_smart_links"
-    private static let eventChannelName  = "flutter_smart_links/events"
-    private static let deferredTokenKey  = "flutter_smart_links_deferred_token"
+    private static let methodChannelName = "tomato_deeplio"
+    private static let eventChannelName  = "tomato_deeplio/events"
+    private static let deferredTokenKey  = "tomato_deeplio_deferred_token"
 
     // MARK: - State
 
@@ -26,7 +28,7 @@ public class FlutterSmartLinksPlugin: NSObject, FlutterPlugin, FlutterStreamHand
     // MARK: - Registration
 
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let instance = FlutterSmartLinksPlugin()
+        let instance = TomatoDeeplioPlugin()
 
         let methodChannel = FlutterMethodChannel(
             name: methodChannelName,
@@ -49,7 +51,7 @@ public class FlutterSmartLinksPlugin: NSObject, FlutterPlugin, FlutterStreamHand
         switch call.method {
         case "getInitialLink":
             result(initialLink)
-            initialLink = nil
+            initialLink = nil // consume once
 
         case "storeDeferredToken":
             if let args = call.arguments as? [String: Any],
@@ -77,6 +79,7 @@ public class FlutterSmartLinksPlugin: NSObject, FlutterPlugin, FlutterStreamHand
         eventSink events: @escaping FlutterEventSink
     ) -> FlutterError? {
         self.eventSink = events
+        // Flush any link that arrived before the stream was ready
         if let pending = pendingLink {
             events(pending)
             pendingLink = nil
@@ -107,10 +110,12 @@ public class FlutterSmartLinksPlugin: NSObject, FlutterPlugin, FlutterStreamHand
         continue userActivity: NSUserActivity,
         restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
     ) -> Bool {
-        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
-              let url = userActivity.webpageURL else { return false }
-        handleIncomingUrl(url.absoluteString)
-        return true
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+           let url = userActivity.webpageURL {
+            handleIncomingUrl(url.absoluteString)
+            return true
+        }
+        return false
     }
 
     // MARK: - Private helpers
@@ -119,6 +124,7 @@ public class FlutterSmartLinksPlugin: NSObject, FlutterPlugin, FlutterStreamHand
         if eventSink != nil {
             eventSink?(urlString)
         } else if initialLink == nil {
+            // First link before stream is ready → treat as initial link
             initialLink = urlString
         } else {
             pendingLink = urlString

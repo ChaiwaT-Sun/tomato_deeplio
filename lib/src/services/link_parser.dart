@@ -1,10 +1,10 @@
-import 'package:flutter_smart_links/src/exceptions/smart_links_exception.dart';
-import 'package:flutter_smart_links/src/models/smart_link.dart';
-import 'package:flutter_smart_links/src/smart_links_config.dart';
+import 'package:tomato_deeplio/src/exceptions/smart_links_exception.dart';
+import 'package:tomato_deeplio/src/models/smart_link.dart';
+import 'package:tomato_deeplio/src/smart_links_config.dart';
 
 /// Parses raw URL strings into [SmartLink] objects.
 class LinkParser {
-  final SmartLinksConfig config;
+  final TomatoDeeplioConfig config;
 
   const LinkParser(this.config);
 

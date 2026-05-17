@@ -1,4 +1,4 @@
-group 'ts.sun.flutter_smart_links'
+group 'ts.sun.tomato_deeplio'
 version '1.0'
 
 buildscript {
@@ -25,7 +25,7 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 34
-    namespace 'ts.sun.flutter_smart_links'
+    namespace 'ts.sun.tomato_deeplio'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

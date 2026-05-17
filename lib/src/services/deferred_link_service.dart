@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_smart_links/src/models/deferred_link_data.dart';
+import 'package:tomato_deeplio/src/models/deferred_link_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Manages persistence and recovery of deferred deep links.
@@ -11,8 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// 3. This service looks up the stored [DeferredLinkData] by token.
 /// 4. Once consumed, the data is marked so it is not replayed.
 class DeferredLinkService {
-  static const _storageKey = 'flutter_smart_links_deferred';
-  static const _firstOpenKey = 'flutter_smart_links_first_open';
+  static const _storageKey = 'tomato_deeplio_deferred';
+  static const _firstOpenKey = 'tomato_deeplio_first_open';
 
   final SharedPreferences _prefs;
 

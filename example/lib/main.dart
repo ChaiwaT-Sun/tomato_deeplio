@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_links/flutter_smart_links.dart';
+import 'package:tomato_deeplio/tomato_deeplio.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // ── 1. Initialise SmartLinks ─────────────────────────────────────────────
-  final smartLinks = SmartLinks();
+  // ── 1. Initialise TomatoDeeplio ─────────────────────────────────────────────
+  final smartLinks = TomatoDeeplio();
 
   await smartLinks.initialize(
-    config: SmartLinksConfig(
+    config: TomatoDeeplioConfig(
       domain: 'links.example.com',
       uriScheme: 'myapp',
       androidPackageName: 'com.example.myapp',
@@ -53,17 +53,17 @@ Future<void> main() async {
     ],
   );
 
-  runApp(SmartLinksExampleApp(smartLinks: smartLinks));
+  runApp(TomatoDeeplioExampleApp(smartLinks: smartLinks));
 }
 
-class SmartLinksExampleApp extends StatelessWidget {
-  final SmartLinks smartLinks;
-  const SmartLinksExampleApp({super.key, required this.smartLinks});
+class TomatoDeeplioExampleApp extends StatelessWidget {
+  final TomatoDeeplio smartLinks;
+  const TomatoDeeplioExampleApp({super.key, required this.smartLinks});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SmartLinks Example',
+      title: 'TomatoDeeplio Example',
       theme: ThemeData(
         colorSchemeSeed: Colors.red,
         useMaterial3: true,
@@ -74,7 +74,7 @@ class SmartLinksExampleApp extends StatelessWidget {
 }
 
 class HomeScreen extends StatefulWidget {
-  final SmartLinks smartLinks;
+  final TomatoDeeplio smartLinks;
   const HomeScreen({super.key, required this.smartLinks});
 
   @override
@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('flutter_smart_links'),
+        title: const Text('tomato_deeplio'),
         centerTitle: true,
       ),
       body: ListView(

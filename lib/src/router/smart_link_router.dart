@@ -1,6 +1,6 @@
-import 'package:flutter_smart_links/src/models/route_match.dart';
-import 'package:flutter_smart_links/src/models/smart_link.dart';
-import 'package:flutter_smart_links/src/router/route_definition.dart';
+import 'package:tomato_deeplio/src/models/route_match.dart';
+import 'package:tomato_deeplio/src/models/smart_link.dart';
+import 'package:tomato_deeplio/src/router/route_definition.dart';
 
 /// Routes incoming [SmartLink]s to registered [RouteDefinition]s.
 ///

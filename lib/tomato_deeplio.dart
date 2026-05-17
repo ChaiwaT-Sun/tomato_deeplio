@@ -1,10 +1,10 @@
-/// flutter_smart_links
+/// tomato_deeplio
 ///
 /// A production-ready Flutter package for App Links, Universal Links,
 /// Deep Links, Deferred Deep Links, and dynamic routing.
 ///
 /// Modern replacement for Firebase Dynamic Links.
-library flutter_smart_links;
+library tomato_deeplio;
 
 // Analytics
 export 'src/analytics/analytics_adapter.dart';

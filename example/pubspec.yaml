@@ -1,5 +1,5 @@
-name: flutter_smart_links_example
-description: Demonstrates how to use the flutter_smart_links plugin.
+name: tomato_deeplio_example
+description: Demonstrates how to use the tomato_deeplio plugin.
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_smart_links:
+  tomato_deeplio:
     path: ../
 
 dev_dependencies:

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_smart_links/flutter_smart_links.dart';
-import 'package:flutter_smart_links/src/services/link_generator.dart';
-import 'package:flutter_smart_links/src/services/link_parser.dart';
+import 'package:tomato_deeplio/tomato_deeplio.dart';
+import 'package:tomato_deeplio/src/services/link_generator.dart';
+import 'package:tomato_deeplio/src/services/link_parser.dart';
 
 void main() {
   group('SmartLink.fromUri', () {
@@ -124,7 +124,7 @@ void main() {
     late LinkGenerator generator;
 
     setUp(() {
-      generator = LinkGenerator(const SmartLinksConfig(
+      generator = LinkGenerator(const TomatoDeeplioConfig(
         domain: 'links.example.com',
         uriScheme: 'myapp',
         defaultUtmSource: 'app',
@@ -170,7 +170,7 @@ void main() {
     late LinkParser parser;
 
     setUp(() {
-      parser = LinkParser(const SmartLinksConfig(
+      parser = LinkParser(const TomatoDeeplioConfig(
         domain: 'links.example.com',
         uriScheme: 'myapp',
       ));
@@ -234,17 +234,17 @@ void main() {
     });
   });
 
-  group('SmartLinksConfig.validate', () {
+  group('TomatoDeeplioConfig.validate', () {
     test('throws on empty domain', () {
       expect(
-        () => const SmartLinksConfig(domain: '', uriScheme: 'myapp').validate(),
+        () => const TomatoDeeplioConfig(domain: '', uriScheme: 'myapp').validate(),
         throwsArgumentError,
       );
     });
 
     test('throws on empty uriScheme', () {
       expect(
-        () => const SmartLinksConfig(domain: 'links.example.com', uriScheme: '')
+        () => const TomatoDeeplioConfig(domain: 'links.example.com', uriScheme: '')
             .validate(),
         throwsArgumentError,
       );
@@ -252,7 +252,7 @@ void main() {
 
     test('throws when uriScheme contains ://', () {
       expect(
-        () => const SmartLinksConfig(
+        () => const TomatoDeeplioConfig(
                 domain: 'links.example.com', uriScheme: 'myapp://')
             .validate(),
         throwsArgumentError,
@@ -261,7 +261,7 @@ void main() {
 
     test('passes valid config', () {
       expect(
-        () => const SmartLinksConfig(
+        () => const TomatoDeeplioConfig(
                 domain: 'links.example.com', uriScheme: 'myapp')
             .validate(),
         returnsNormally,

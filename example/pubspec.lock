@@ -78,13 +78,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.0"
-  flutter_smart_links:
-    dependency: "direct main"
-    description:
-      path: ".."
-      relative: true
-    source: path
-    version: "1.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -308,6 +301,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.2"
+  tomato_deeplio:
+    dependency: "direct main"
+    description:
+      path: ".."
+      relative: true
+    source: path
+    version: "1.0.0"
   vector_math:
     dependency: transitive
     description:

@@ -1,28 +1,28 @@
 import 'dart:async';
 
-import 'package:flutter_smart_links/src/analytics/analytics_adapter.dart';
-import 'package:flutter_smart_links/src/analytics/console_analytics_adapter.dart';
-import 'package:flutter_smart_links/src/exceptions/smart_links_exception.dart';
-import 'package:flutter_smart_links/src/models/analytics_event.dart';
-import 'package:flutter_smart_links/src/models/smart_link.dart';
-import 'package:flutter_smart_links/src/models/smart_link_result.dart';
-import 'package:flutter_smart_links/src/platform/method_channel_smart_links.dart';
-import 'package:flutter_smart_links/src/platform/smart_links_platform_interface.dart';
-import 'package:flutter_smart_links/src/router/route_definition.dart';
-import 'package:flutter_smart_links/src/router/smart_link_router.dart';
-import 'package:flutter_smart_links/src/services/deferred_link_service.dart';
-import 'package:flutter_smart_links/src/services/link_generator.dart';
-import 'package:flutter_smart_links/src/services/link_parser.dart';
-import 'package:flutter_smart_links/src/smart_links_config.dart';
+import 'package:tomato_deeplio/src/analytics/analytics_adapter.dart';
+import 'package:tomato_deeplio/src/analytics/console_analytics_adapter.dart';
+import 'package:tomato_deeplio/src/exceptions/smart_links_exception.dart';
+import 'package:tomato_deeplio/src/models/analytics_event.dart';
+import 'package:tomato_deeplio/src/models/smart_link.dart';
+import 'package:tomato_deeplio/src/models/smart_link_result.dart';
+import 'package:tomato_deeplio/src/platform/method_channel_smart_links.dart';
+import 'package:tomato_deeplio/src/platform/smart_links_platform_interface.dart';
+import 'package:tomato_deeplio/src/router/route_definition.dart';
+import 'package:tomato_deeplio/src/router/smart_link_router.dart';
+import 'package:tomato_deeplio/src/services/deferred_link_service.dart';
+import 'package:tomato_deeplio/src/services/link_generator.dart';
+import 'package:tomato_deeplio/src/services/link_parser.dart';
+import 'package:tomato_deeplio/src/smart_links_config.dart';
 
-/// The main entry point for flutter_smart_links.
+/// The main entry point for tomato_deeplio.
 ///
 /// ## Quick start
 /// ```dart
-/// final smartLinks = SmartLinks();
+/// final smartLinks = TomatoDeeplio();
 ///
 /// await smartLinks.initialize(
-///   config: SmartLinksConfig(
+///   config: TomatoDeeplioConfig(
 ///     domain: 'links.example.com',
 ///     uriScheme: 'myapp',
 ///   ),
@@ -37,20 +37,20 @@ import 'package:flutter_smart_links/src/smart_links_config.dart';
 ///   params: {'ref': 'USER001'},
 /// );
 /// ```
-class SmartLinks {
+class TomatoDeeplio {
   // ── Singleton ──────────────────────────────────────────────────────────────
 
-  static SmartLinks? _instance;
+  static TomatoDeeplio? _instance;
 
   /// Returns the singleton instance.
-  factory SmartLinks() => _instance ??= SmartLinks._internal();
+  factory TomatoDeeplio() => _instance ??= TomatoDeeplio._internal();
 
-  SmartLinks._internal();
+  TomatoDeeplio._internal();
 
   // ── State ──────────────────────────────────────────────────────────────────
 
   bool _initialized = false;
-  late SmartLinksConfig _config;
+  late TomatoDeeplioConfig _config;
   late LinkParser _parser;
   late LinkGenerator _generator;
   late SmartLinkRouter _router;
@@ -70,7 +70,7 @@ class SmartLinks {
   bool get isInitialized => _initialized;
 
   /// The active configuration.
-  SmartLinksConfig get config {
+  TomatoDeeplioConfig get config {
     _assertInitialized();
     return _config;
   }
@@ -95,7 +95,7 @@ class SmartLinks {
 
   // ── Initialisation ─────────────────────────────────────────────────────────
 
-  /// Initialises the SmartLinks system.
+  /// Initialises the TomatoDeeplio system.
   ///
   /// Must be called once, typically in `main()` before `runApp()`.
   ///
@@ -104,7 +104,7 @@ class SmartLinks {
   /// - [analyticsAdapters] — optional analytics backends.
   /// - [debugMode] — if true, adds a [ConsoleAnalyticsAdapter].
   Future<void> initialize({
-    required SmartLinksConfig config,
+    required TomatoDeeplioConfig config,
     List<RouteDefinition> routes = const [],
     List<AnalyticsAdapter> analyticsAdapters = const [],
     bool debugMode = false,
@@ -124,7 +124,7 @@ class SmartLinks {
     }
 
     // Register the method channel implementation
-    SmartLinksPlatformInterface.instance = MethodChannelSmartLinks();
+    TomatoDeeplioPlatformInterface.instance = MethodChannelTomatoDeeplio();
 
     // Deferred link service
     _deferredService = await DeferredLinkService.create();
@@ -140,7 +140,7 @@ class SmartLinks {
     }
 
     // Subscribe to foreground links
-    _platformSubscription = SmartLinksPlatformInterface.instance.linkStream
+    _platformSubscription = TomatoDeeplioPlatformInterface.instance.linkStream
         .listen(_onRawLink, onError: _onLinkError);
   }
 
@@ -267,7 +267,7 @@ class SmartLinks {
   Future<void> _handleInitialLink() async {
     try {
       final rawUrl =
-          await SmartLinksPlatformInterface.instance.getInitialLink();
+          await TomatoDeeplioPlatformInterface.instance.getInitialLink();
       if (rawUrl != null && rawUrl.isNotEmpty) {
         await _onRawLink(rawUrl);
       }
@@ -373,7 +373,7 @@ class SmartLinks {
   void _log(String message) {
     if (_config.debugMode) {
       // ignore: avoid_print
-      print('[SmartLinks] $message');
+      print('[TomatoDeeplio] $message');
     }
   }
 }

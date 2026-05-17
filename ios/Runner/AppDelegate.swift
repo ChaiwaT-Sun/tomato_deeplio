@@ -10,9 +10,9 @@ import UIKit
     ) -> Bool {
         GeneratedPluginRegistrant.register(with: self)
 
-        // Register the SmartLinks plugin
-        FlutterSmartLinksPlugin.register(
-            with: registrar(forPlugin: "FlutterSmartLinksPlugin")!
+        // Register the TomatoDeeplio plugin
+        TomatoDeeplioPlugin.register(
+            with: registrar(forPlugin: "TomatoDeeplioPlugin")!
         )
 
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -26,7 +26,7 @@ import UIKit
         restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
     ) -> Bool {
         // Forward to the plugin first
-        let handled = FlutterSmartLinksPlugin().application(
+        let handled = TomatoDeeplioPlugin().application(
             application,
             continue: userActivity,
             restorationHandler: restorationHandler
@@ -46,7 +46,7 @@ import UIKit
         open url: URL,
         options: [UIApplication.OpenURLOptionsKey: Any] = [:]
     ) -> Bool {
-        let handled = FlutterSmartLinksPlugin().application(app, open: url, options: options)
+        let handled = TomatoDeeplioPlugin().application(app, open: url, options: options)
         if handled { return true }
         return super.application(app, open: url, options: options)
     }

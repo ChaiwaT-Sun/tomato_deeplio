@@ -1,7 +1,7 @@
 {
   "name": "flutter-smart-links-functions",
   "version": "1.0.0",
-  "description": "Firebase Cloud Functions for flutter_smart_links",
+  "description": "Firebase Cloud Functions for tomato_deeplio",
   "main": "index.js",
   "engines": {
     "node": "20"

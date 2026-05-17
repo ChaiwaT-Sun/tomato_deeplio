@@ -1,4 +1,4 @@
-package ts.sun.flutter_smart_links
+package ts.sun.tomato_deeplio
 
 import android.app.Activity
 import android.content.Context
@@ -15,7 +15,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
 /**
- * FlutterSmartLinksPlugin
+ * TomatoDeeplioPlugin
  *
  * Handles:
  * - App Links (Android 12+ verified links)
@@ -24,28 +24,25 @@ import io.flutter.plugin.common.MethodChannel.Result
  * - Foreground link stream (EventChannel)
  * - Deferred link token persistence (SharedPreferences)
  */
-class FlutterSmartLinksPlugin :
+class TomatoDeeplioPlugin :
     FlutterPlugin,
     MethodCallHandler,
     ActivityAware,
     EventChannel.StreamHandler {
 
     companion object {
-        private const val METHOD_CHANNEL = "flutter_smart_links"
-        private const val EVENT_CHANNEL = "flutter_smart_links/events"
-        private const val PREFS_NAME = "flutter_smart_links_prefs"
-        private const val KEY_DEFERRED_TOKEN = "deferred_token"
+        private const val METHOD_CHANNEL = "tomato_deeplio"
+        private const val EVENT_CHANNEL  = "tomato_deeplio/events"
+        private const val PREFS_NAME     = "tomato_deeplio_prefs"
+        private const val KEY_DEFERRED   = "deferred_token"
     }
 
     private lateinit var methodChannel: MethodChannel
     private lateinit var eventChannel: EventChannel
     private lateinit var context: Context
-    private var activity: Activity? = null
-    private var eventSink: EventChannel.EventSink? = null
 
-    // Holds the initial link URL until Dart side requests it
+    private var eventSink: EventChannel.EventSink? = null
     private var initialLink: String? = null
-    // Holds a pending link received while the app is running
     private var pendingLink: String? = null
 
     // ── FlutterPlugin ──────────────────────────────────────────────────────
@@ -68,8 +65,6 @@ class FlutterSmartLinksPlugin :
     // ── ActivityAware ──────────────────────────────────────────────────────
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        activity = binding.activity
-        // Extract the initial link from the launch intent
         initialLink = extractLink(binding.activity.intent)
         binding.addOnNewIntentListener { intent ->
             handleNewIntent(intent)
@@ -77,17 +72,9 @@ class FlutterSmartLinksPlugin :
         }
     }
 
-    override fun onDetachedFromActivityForConfigChanges() {
-        activity = null
-    }
-
-    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-        activity = binding.activity
-    }
-
-    override fun onDetachedFromActivity() {
-        activity = null
-    }
+    override fun onDetachedFromActivityForConfigChanges() {}
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {}
+    override fun onDetachedFromActivity() {}
 
     // ── MethodCallHandler ──────────────────────────────────────────────────
 
@@ -95,21 +82,16 @@ class FlutterSmartLinksPlugin :
         when (call.method) {
             "getInitialLink" -> {
                 result.success(initialLink)
-                // Clear after first read so it is not replayed
                 initialLink = null
             }
             "storeDeferredToken" -> {
                 val token = call.argument<String>("token")
-                if (token != null) {
-                    prefs().edit().putString(KEY_DEFERRED_TOKEN, token).apply()
-                }
+                if (token != null) prefs().edit().putString(KEY_DEFERRED, token).apply()
                 result.success(null)
             }
-            "getDeferredToken" -> {
-                result.success(prefs().getString(KEY_DEFERRED_TOKEN, null))
-            }
+            "getDeferredToken" -> result.success(prefs().getString(KEY_DEFERRED, null))
             "clearDeferredToken" -> {
-                prefs().edit().remove(KEY_DEFERRED_TOKEN).apply()
+                prefs().edit().remove(KEY_DEFERRED).apply()
                 result.success(null)
             }
             else -> result.notImplemented()
@@ -120,7 +102,6 @@ class FlutterSmartLinksPlugin :
 
     override fun onListen(arguments: Any?, sink: EventChannel.EventSink?) {
         eventSink = sink
-        // Flush any link that arrived before the stream was ready
         pendingLink?.let { link ->
             sink?.success(link)
             pendingLink = null
@@ -135,25 +116,13 @@ class FlutterSmartLinksPlugin :
 
     private fun handleNewIntent(intent: Intent) {
         val link = extractLink(intent) ?: return
-        if (eventSink != null) {
-            eventSink?.success(link)
-        } else {
-            pendingLink = link
-        }
+        if (eventSink != null) eventSink?.success(link) else pendingLink = link
     }
 
     private fun extractLink(intent: Intent?): String? {
         if (intent == null) return null
-        val action = intent.action
         val data: Uri? = intent.data
-
-        return when {
-            // App Link / Universal Link (HTTPS)
-            action == Intent.ACTION_VIEW && data != null -> data.toString()
-            // Custom URI scheme
-            action == Intent.ACTION_VIEW && data != null -> data.toString()
-            else -> null
-        }
+        return if (intent.action == Intent.ACTION_VIEW && data != null) data.toString() else null
     }
 
     private fun prefs(): SharedPreferences =

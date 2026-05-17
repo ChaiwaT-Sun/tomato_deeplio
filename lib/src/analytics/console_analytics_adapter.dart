@@ -1,5 +1,5 @@
-import 'package:flutter_smart_links/src/analytics/analytics_adapter.dart';
-import 'package:flutter_smart_links/src/models/analytics_event.dart';
+import 'package:tomato_deeplio/src/analytics/analytics_adapter.dart';
+import 'package:tomato_deeplio/src/models/analytics_event.dart';
 
 /// A simple [AnalyticsAdapter] that prints events to the console.
 ///
@@ -14,10 +14,10 @@ class ConsoleAnalyticsAdapter implements AnalyticsAdapter {
   Future<void> track(SmartLinkAnalyticsEvent event) async {
     if (verbose) {
       // ignore: avoid_print
-      print('[SmartLinks Analytics] ${event.toMap()}');
+      print('[TomatoDeeplio Analytics] ${event.toMap()}');
     } else {
       // ignore: avoid_print
-      print('[SmartLinks Analytics] ${event.type.name}: ${event.path ?? event.url}');
+      print('[TomatoDeeplio Analytics] ${event.type.name}: ${event.path ?? event.url}');
     }
   }
 }

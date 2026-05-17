@@ -1,8 +1,8 @@
-# flutter_smart_links
+# tomato_deeplio
 
-[![pub.dev](https://img.shields.io/pub/v/flutter_smart_links.svg)](https://pub.dev/packages/flutter_smart_links)
-[![GitHub](https://img.shields.io/badge/GitHub-ChaiwaT--Sun%2Fflutter__smart__links-blue?logo=github)](https://github.com/ChaiwaT-Sun/flutter_smart_links)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/ChaiwaT-Sun/flutter_smart_links/blob/main/LICENSE)
+[![pub.dev](https://img.shields.io/pub/v/tomato_deeplio.svg)](https://pub.dev/packages/tomato_deeplio)
+[![GitHub](https://img.shields.io/badge/GitHub-ChaiwaT--Sun%2Fflutter__smart__links-blue?logo=github)](https://github.com/ChaiwaT-Sun/tomato_deeplio)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/ChaiwaT-Sun/tomato_deeplio/blob/main/LICENSE)
 
 A production-ready Flutter package for **App Links**, **Universal Links**, **Deep Links**, **Deferred Deep Links**, and **dynamic routing** — a modern, self-hosted replacement for Firebase Dynamic Links.
 
@@ -28,12 +28,12 @@ A production-ready Flutter package for **App Links**, **Universal Links**, **Dee
 ## Folder Structure
 
 ```
-flutter_smart_links/
+tomato_deeplio/
 ├── lib/
-│   ├── flutter_smart_links.dart          ← public barrel export
+│   ├── tomato_deeplio.dart          ← public barrel export
 │   └── src/
-│       ├── smart_links.dart              ← main SmartLinks class
-│       ├── smart_links_config.dart       ← SmartLinksConfig
+│       ├── smart_links.dart              ← main TomatoDeeplio class
+│       ├── smart_links_config.dart       ← TomatoDeeplioConfig
 │       ├── models/
 │       │   ├── smart_link.dart
 │       │   ├── smart_link_result.dart
@@ -58,10 +58,10 @@ flutter_smart_links/
 ├── android/
 │   └── app/src/main/
 │       ├── AndroidManifest.xml           ← intent-filters
-│       └── kotlin/.../FlutterSmartLinksPlugin.kt
+│       └── kotlin/.../TomatoDeeplioPlugin.kt
 ├── ios/
 │   └── Runner/
-│       ├── FlutterSmartLinksPlugin.swift
+│       ├── TomatoDeeplioPlugin.swift
 │       ├── AppDelegate.swift
 │       └── Info.plist                    ← URL scheme + associated domains
 ├── web/
@@ -87,7 +87,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  flutter_smart_links: ^1.0.0
+  tomato_deeplio: ^1.0.0
 ```
 
 Then run:
@@ -101,15 +101,15 @@ flutter pub get
 ## Quick Start
 
 ```dart
-import 'package:flutter_smart_links/flutter_smart_links.dart';
+import 'package:tomato_deeplio/tomato_deeplio.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final smartLinks = SmartLinks();
+  final smartLinks = TomatoDeeplio();
 
   await smartLinks.initialize(
-    config: SmartLinksConfig(
+    config: TomatoDeeplioConfig(
       domain: 'links.example.com',      // your custom domain
       uriScheme: 'myapp',               // your URI scheme
       androidPackageName: 'com.example.myapp',
@@ -153,7 +153,7 @@ Future<void> main() async {
 ### Generate links
 
 ```dart
-final smartLinks = SmartLinks();
+final smartLinks = TomatoDeeplio();
 
 // HTTPS smart link
 final url = smartLinks.createLink(
@@ -419,9 +419,9 @@ The `firebase/firebase.json` rewrites ensure:
 
 ## Branch.io Migration
 
-| Branch.io | flutter_smart_links |
+| Branch.io | tomato_deeplio |
 |---|---|
-| `Branch.initSession` | `SmartLinks().initialize()` |
+| `Branch.initSession` | `TomatoDeeplio().initialize()` |
 | `Branch.subscribe` | `smartLinks.linkStream.listen()` |
 | `BranchUniversalObject.generateShortUrl` | `smartLinks.createLink()` |
 | `Branch.getLatestReferringParams` | `smartLinks.getPendingDeferredLink()` |

@@ -1,12 +1,12 @@
-name: flutter_smart_links
+name: tomato_deeplio
 description: >-
   A production-ready Flutter plugin for App Links, Universal Links,
   Deep Links, Deferred Deep Links, and dynamic routing.
   A modern self-hosted replacement for Firebase Dynamic Links.
 version: 1.0.0
-homepage: https://github.com/ChaiwaT-Sun/flutter_smart_links
-repository: https://github.com/ChaiwaT-Sun/flutter_smart_links
-issue_tracker: https://github.com/ChaiwaT-Sun/flutter_smart_links/issues
+homepage: https://github.com/ChaiwaT-Sun/tomato_deeplio
+repository: https://github.com/ChaiwaT-Sun/tomato_deeplio
+issue_tracker: https://github.com/ChaiwaT-Sun/tomato_deeplio/issues
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -27,7 +27,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: ts.sun.flutter_smart_links
-        pluginClass: FlutterSmartLinksPlugin
+        package: ts.sun.tomato_deeplio
+        pluginClass: TomatoDeeplioPlugin
       ios:
-        pluginClass: FlutterSmartLinksPlugin
+        pluginClass: TomatoDeeplioPlugin

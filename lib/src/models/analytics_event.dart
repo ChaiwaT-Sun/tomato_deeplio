@@ -1,4 +1,4 @@
-/// Types of analytics events emitted by flutter_smart_links.
+/// Types of analytics events emitted by tomato_deeplio.
 enum SmartLinkEventType {
   /// A link was received and parsed.
   linkReceived,

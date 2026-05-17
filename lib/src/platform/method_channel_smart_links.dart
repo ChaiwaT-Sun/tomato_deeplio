@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:flutter/services.dart';
-import 'package:flutter_smart_links/src/platform/smart_links_platform_interface.dart';
+import 'package:tomato_deeplio/src/platform/smart_links_platform_interface.dart';
 
-/// Method channel implementation of [SmartLinksPlatformInterface].
+/// Method channel implementation of [TomatoDeeplioPlatformInterface].
 ///
 /// Communicates with the native Android (Kotlin) and iOS (Swift) plugins.
-class MethodChannelSmartLinks extends SmartLinksPlatformInterface {
-  static const _channel = MethodChannel('flutter_smart_links');
-  static const _eventChannel = EventChannel('flutter_smart_links/events');
+class MethodChannelTomatoDeeplio extends TomatoDeeplioPlatformInterface {
+  static const _channel = MethodChannel('tomato_deeplio');
+  static const _eventChannel = EventChannel('tomato_deeplio/events');
 
   Stream<String>? _linkStream;
 

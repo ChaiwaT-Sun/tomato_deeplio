@@ -1,19 +1,19 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 /// The platform interface that all platform implementations must implement.
-abstract class SmartLinksPlatformInterface extends PlatformInterface {
-  SmartLinksPlatformInterface() : super(token: _token);
+abstract class TomatoDeeplioPlatformInterface extends PlatformInterface {
+  TomatoDeeplioPlatformInterface() : super(token: _token);
 
   static final Object _token = Object();
 
-  static SmartLinksPlatformInterface _instance =
-      _UnimplementedSmartLinksPlatform();
+  static TomatoDeeplioPlatformInterface _instance =
+      _UnimplementedTomatoDeeplioPlatform();
 
   /// The current platform instance.
-  static SmartLinksPlatformInterface get instance => _instance;
+  static TomatoDeeplioPlatformInterface get instance => _instance;
 
   /// Sets the platform instance. Only plugin implementations should call this.
-  static set instance(SmartLinksPlatformInterface instance) {
+  static set instance(TomatoDeeplioPlatformInterface instance) {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
   }
@@ -35,7 +35,7 @@ abstract class SmartLinksPlatformInterface extends PlatformInterface {
 }
 
 /// Fallback implementation that throws on every call.
-class _UnimplementedSmartLinksPlatform extends SmartLinksPlatformInterface {
+class _UnimplementedTomatoDeeplioPlatform extends TomatoDeeplioPlatformInterface {
   @override
   Future<String?> getInitialLink() => throw UnimplementedError(
       'getInitialLink() has not been implemented on this platform.');

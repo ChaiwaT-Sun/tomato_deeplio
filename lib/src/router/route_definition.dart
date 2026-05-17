@@ -1,4 +1,4 @@
-import 'package:flutter_smart_links/src/models/route_match.dart';
+import 'package:tomato_deeplio/src/models/route_match.dart';
 
 /// Defines a route pattern that can be matched against incoming link paths.
 ///

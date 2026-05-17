@@ -1,14 +1,14 @@
 Pod::Spec.new do |s|
-  s.name             = 'flutter_smart_links'
+  s.name             = 'tomato_deeplio'
   s.version          = '1.0.0'
   s.summary          = 'App Links, Universal Links, Deep Links, and Deferred Deep Links for Flutter.'
   s.description      = <<-DESC
     A production-ready Flutter plugin for App Links, Universal Links,
     Deep Links, Deferred Deep Links, and dynamic routing.
     A modern self-hosted replacement for Firebase Dynamic Links.
-    GitHub: https://github.com/ChaiwaT-Sun/flutter_smart_links
+    GitHub: https://github.com/ChaiwaT-Sun/tomato_deeplio
   DESC
-  s.homepage         = 'https://github.com/ChaiwaT-Sun/flutter_smart_links'
+  s.homepage         = 'https://github.com/ChaiwaT-Sun/tomato_deeplio'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'ChaiwaT-Sun' => 'https://github.com/ChaiwaT-Sun' }
   s.source           = { :path => '.' }

@@ -1,5 +1,5 @@
-/// Configuration for [SmartLinks].
-class SmartLinksConfig {
+/// Configuration for [TomatoDeeplio].
+class TomatoDeeplioConfig {
   /// Your app's custom domain, e.g. `links.example.com`.
   final String domain;
 
@@ -34,7 +34,7 @@ class SmartLinksConfig {
   /// Default UTM medium to attach to generated links.
   final String? defaultUtmMedium;
 
-  const SmartLinksConfig({
+  const TomatoDeeplioConfig({
     required this.domain,
     required this.uriScheme,
     this.androidPackageName,
@@ -60,5 +60,5 @@ class SmartLinksConfig {
 
   @override
   String toString() =>
-      'SmartLinksConfig(domain: $domain, scheme: $uriScheme, deferred: $enableDeferredLinks)';
+      'TomatoDeeplioConfig(domain: $domain, scheme: $uriScheme, deferred: $enableDeferredLinks)';
 }
